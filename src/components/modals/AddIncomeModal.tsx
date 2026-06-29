@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { Modal } from './Modal';
+import { NumberInput } from '@/components/ui/NumberInput';
 
 interface AddIncomeModalProps {
   isOpen: boolean;
@@ -67,14 +68,11 @@ export function AddIncomeModal({ isOpen, onClose, monthId, onAdd }: AddIncomeMod
         </div>
         <div>
           <label className={labelCls}>Expected Amount</label>
-          <input
-            type="number"
-            step="0.01"
-            min="0"
+          <NumberInput
             placeholder="0.00"
             className={inputCls}
             value={expectedAmount}
-            onChange={(e) => setExpectedAmount(e.target.value)}
+            onChange={setExpectedAmount}
             required
           />
         </div>

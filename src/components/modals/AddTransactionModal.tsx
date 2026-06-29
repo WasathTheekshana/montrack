@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Modal } from './Modal';
+import { NumberInput } from '@/components/ui/NumberInput';
+import { Select } from '@/components/ui/Select';
+import { CategorySelect } from '@/components/ui/CategorySelect';
 import { SUPPORTED_CURRENCIES } from '@/lib/currency';
 import type { BudgetCategory, CurrencyCode } from '@/types';
 
@@ -45,11 +48,13 @@ export function AddTransactionModal({
   const [categoryId, setCategoryId] = useState('');
   const [description, setDescription] = useState('');
 
-  // Update exchange rate when currency changes
+  const isForeignCurrency = currency !== baseCurrency;
+
+  // Re-fetch rate when currency or date changes
   useEffect(() => {
     const rate = getRate(currency);
     setExchangeRate(rate.toFixed(4));
-  }, [currency, getRate]);
+  }, [currency, date, getRate]);
 
   const converted = parseFloat(amount || '0') * parseFloat(exchangeRate || '1');
 
@@ -108,27 +113,29 @@ export function AddTransactionModal({
 
         <div>
           <label className={labelCls}>Date</label>
-          <input type="date" className={inputCls} value={date} onChange={(e) => setDate(e.target.value)} required />
+          <input
+            type="date"
+            className={inputCls}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={labelCls}>Amount</label>
-            <input
-              type="number"
-              step="0.01"
-              min="0"
+            <NumberInput
               placeholder="0.00"
               className={inputCls}
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={setAmount}
               required
             />
           </div>
           <div>
             <label className={labelCls}>Currency</label>
-            <select
-              className={inputCls}
+            <Select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
@@ -137,11 +144,11 @@ export function AddTransactionModal({
                   {c.code}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 
-        {currency !== baseCurrency && (
+        {isForeignCurrency && (
           <div>
             <label className={labelCls}>
               Exchange Rate (1 {currency} = ? {baseCurrency})
@@ -161,25 +168,22 @@ export function AddTransactionModal({
                 ≈ {baseCurrency} {converted.toFixed(2)}
               </p>
             )}
+            <p className="mt-1 text-xs text-orange font-bold">
+              Rate is for today. Adjust manually if this is a past transaction.
+            </p>
           </div>
         )}
 
         {type === 'expense' && (
           <div>
             <label className={labelCls}>Budget Category</label>
-            <select
-              className={inputCls}
+            <CategorySelect
+              categories={expenseCategories}
               value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              onChange={setCategoryId}
+              placeholder="Select category…"
               required
-            >
-              <option value="">Select category…</option>
-              {expenseCategories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            />
           </div>
         )}
 
@@ -187,7 +191,7 @@ export function AddTransactionModal({
           <label className={labelCls}>Description</label>
           <input
             className={inputCls}
-            placeholder="e.g. June Month Fee"
+            placeholder="e.g. Monthly subscription payment"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />

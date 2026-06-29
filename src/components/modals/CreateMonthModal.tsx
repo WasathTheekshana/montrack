@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { format, startOfMonth, endOfMonth } from 'date-fns';
 import { Modal } from './Modal';
+import { Select } from '@/components/ui/Select';
 import { budgetRepository } from '@/lib/repositories/budgetRepository';
 import { incomeRepository } from '@/lib/repositories/incomeRepository';
 import { DEFAULT_TEMPLATE } from '@/lib/constants';
@@ -94,13 +95,13 @@ export function CreateMonthModal({
 
         <div>
           <label className={labelCls}>Base Currency</label>
-          <select className={inputCls} value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
+          <Select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
             {SUPPORTED_CURRENCIES.map((c) => (
               <option key={c.code} value={c.code}>
                 {c.code} — {c.name}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
 
         <div>
@@ -124,8 +125,7 @@ export function CreateMonthModal({
         {setupMode === 'copy' && (
           <div>
             <label className={labelCls}>Copy From</label>
-            <select
-              className={inputCls}
+            <Select
               value={copyFromId}
               onChange={(e) => setCopyFromId(e.target.value)}
               required={setupMode === 'copy'}
@@ -136,7 +136,7 @@ export function CreateMonthModal({
                   {m.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         )}
 

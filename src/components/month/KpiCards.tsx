@@ -35,7 +35,7 @@ export function KpiCards({ stats, currency }: KpiCardsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 px-5 mt-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 px-5 mt-4">
       {cards.map(({ label, value, bg, alwaysInk }) => (
         <div
           key={label}

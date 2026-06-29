@@ -91,7 +91,14 @@ export function BudgetSection({
                     )}
                   </button>
                 )}
-                <p className="text-sm font-bold text-ink truncate">{cat.name}</p>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-ink truncate">{cat.name}</p>
+                  {cat.description && (
+                    <p className="text-xs text-ink/40 font-semibold truncate mt-0.5">
+                      {cat.description}
+                    </p>
+                  )}
+                </div>
                 {isBills && (
                   <span className="text-xs text-ink/50 font-semibold whitespace-nowrap">
                     {cat.dueDate ?? '—'}

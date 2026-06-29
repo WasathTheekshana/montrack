@@ -26,6 +26,7 @@ export interface BudgetCategory {
   type: BudgetType;
   name: string;
   budgetAmount: number;
+  description?: string;
   dueDate?: string;
   isPaid?: boolean;
   order: number;

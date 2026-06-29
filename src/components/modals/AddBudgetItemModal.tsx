@@ -2,8 +2,16 @@
 
 import { useState } from 'react';
 import { Modal } from './Modal';
+import { NumberInput } from '@/components/ui/NumberInput';
 import { BUDGET_TYPE_CONFIG } from '@/lib/constants';
 import type { BudgetType } from '@/types';
+
+const NAME_PLACEHOLDERS: Record<BudgetType, string> = {
+  bills: 'e.g. Internet bill, Netflix subscription',
+  expenses: 'e.g. Groceries, Gym & Fitness',
+  savings: 'e.g. Emergency Fund, Travel savings',
+  debt: 'e.g. Credit card, Loan payment',
+};
 
 interface AddBudgetItemModalProps {
   isOpen: boolean;
@@ -16,6 +24,7 @@ interface AddBudgetItemModalProps {
     type: BudgetType;
     name: string;
     budgetAmount: number;
+    description?: string;
     dueDate?: string;
     isPaid: boolean;
     order: number;
@@ -32,6 +41,7 @@ export function AddBudgetItemModal({
 }: AddBudgetItemModalProps) {
   const [name, setName] = useState('');
   const [budgetAmount, setBudgetAmount] = useState('');
+  const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
 
   const config = BUDGET_TYPE_CONFIG[type];
@@ -43,12 +53,14 @@ export function AddBudgetItemModal({
       type,
       name,
       budgetAmount: parseFloat(budgetAmount) || 0,
+      description: description.trim() || undefined,
       dueDate: dueDate || undefined,
       isPaid: false,
       order: nextOrder,
     });
     setName('');
     setBudgetAmount('');
+    setDescription('');
     setDueDate('');
     onClose();
   }
@@ -64,7 +76,7 @@ export function AddBudgetItemModal({
           <label className={labelCls}>Name</label>
           <input
             className={inputCls}
-            placeholder={type === 'bills' ? 'e.g. BL - Internet' : 'e.g. EX - Groceries'}
+            placeholder={NAME_PLACEHOLDERS[type]}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -73,15 +85,26 @@ export function AddBudgetItemModal({
 
         <div>
           <label className={labelCls}>Budget Amount</label>
-          <input
-            type="number"
-            step="0.01"
-            min="0"
+          <NumberInput
             placeholder="0.00"
             className={inputCls}
             value={budgetAmount}
-            onChange={(e) => setBudgetAmount(e.target.value)}
+            onChange={setBudgetAmount}
             required
+          />
+        </div>
+
+        <div>
+          <label className={labelCls}>
+            Description{' '}
+            <span className="text-ink/30 normal-case font-semibold">(optional)</span>
+          </label>
+          <textarea
+            className={`${inputCls} resize-none`}
+            placeholder="Add a note or description…"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={2}
           />
         </div>
 
