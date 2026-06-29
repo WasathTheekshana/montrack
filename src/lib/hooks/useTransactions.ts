@@ -1,19 +1,17 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { transactionRepository } from '../repositories/transactionRepository';
 import type { Transaction } from '@/types';
 
 export function useTransactions(monthId: string) {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>(() =>
+    transactionRepository.findByMonth(monthId)
+  );
 
   const refresh = useCallback(() => {
     setTransactions(transactionRepository.findByMonth(monthId));
   }, [monthId]);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
 
   const addTransaction = useCallback(
     (data: Omit<Transaction, 'id' | 'createdAt'>): Transaction => {

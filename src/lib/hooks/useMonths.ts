@@ -1,19 +1,15 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { monthRepository } from '../repositories/monthRepository';
 import type { Month } from '@/types';
 
 export function useMonths() {
-  const [months, setMonths] = useState<Month[]>([]);
+  const [months, setMonths] = useState<Month[]>(() => monthRepository.findAll());
 
   const refresh = useCallback(() => {
     setMonths(monthRepository.findAll());
   }, []);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
 
   const createMonth = useCallback(
     (data: Omit<Month, 'id' | 'createdAt'>): Month => {

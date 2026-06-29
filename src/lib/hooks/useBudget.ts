@@ -1,19 +1,17 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { budgetRepository } from '../repositories/budgetRepository';
 import type { BudgetCategory, BudgetType } from '@/types';
 
 export function useBudget(monthId: string) {
-  const [categories, setCategories] = useState<BudgetCategory[]>([]);
+  const [categories, setCategories] = useState<BudgetCategory[]>(() =>
+    budgetRepository.findByMonth(monthId)
+  );
 
   const refresh = useCallback(() => {
     setCategories(budgetRepository.findByMonth(monthId));
   }, [monthId]);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
 
   const addCategory = useCallback(
     (data: Omit<BudgetCategory, 'id'>): BudgetCategory => {

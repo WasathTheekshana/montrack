@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Gear, CalendarBlank, ArrowRight } from '@phosphor-icons/react';
+import { Plus, Gear, CalendarBlank, ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
 import { format, parseISO } from 'date-fns';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { useSettings } from '@/lib/hooks/useSettings';
@@ -13,8 +13,9 @@ import { transactionRepository } from '@/lib/repositories/transactionRepository'
 import { budgetRepository } from '@/lib/repositories/budgetRepository';
 import { incomeRepository } from '@/lib/repositories/incomeRepository';
 import { monthStats } from '@/lib/calculations';
+import type { Month } from '@/types';
 
-function MonthCard({ month, onClick }: { month: ReturnType<typeof useMonths>['months'][0]; onClick: () => void }) {
+function MonthCard({ month, onClick }: { month: Month; onClick: () => void }) {
   const transactions = transactionRepository.findByMonth(month.id);
   const categories = budgetRepository.findByMonth(month.id);
   const incomes = incomeRepository.findByMonth(month.id);
@@ -55,9 +56,7 @@ function MonthCard({ month, onClick }: { month: ReturnType<typeof useMonths>['mo
         </div>
         <div className="px-4 py-3">
           <p className="text-xs text-ink/40 font-bold uppercase">Left</p>
-          <p
-            className={`font-display font-bold text-sm mt-0.5 ${stats.leftToSpend < 0 ? 'text-pink' : 'text-ink'}`}
-          >
+          <p className={`font-display font-bold text-sm mt-0.5 ${stats.leftToSpend < 0 ? 'text-pink' : 'text-ink'}`}>
             {fmt(Math.abs(stats.leftToSpend), month.baseCurrency)}
           </p>
         </div>
@@ -78,15 +77,105 @@ function MonthCard({ month, onClick }: { month: ReturnType<typeof useMonths>['mo
   );
 }
 
+function RecentTransactions({ months, onMonthClick }: { months: Month[]; onMonthClick: (id: string) => void }) {
+  const recentTxs = useMemo(() => {
+    const all = months.flatMap((m) => {
+      const txs = transactionRepository.findByMonth(m.id);
+      const cats = budgetRepository.findByMonth(m.id);
+      return txs.map((tx) => ({
+        ...tx,
+        monthName: m.name,
+        monthCurrency: m.baseCurrency,
+        categoryName: cats.find((c) => c.id === tx.budgetCategoryId)?.name ?? '',
+      }));
+    });
+    return all
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 20);
+  }, [months]);
+
+  return (
+    <div>
+      <h2 className="font-display font-bold text-base text-ink uppercase tracking-wider mb-3">
+        Recent Transactions
+      </h2>
+      <div className="rounded-2xl border-2 border-ink bg-surface [box-shadow:3px_3px_0_#0A0A0A] overflow-hidden">
+        {recentTxs.length === 0 ? (
+          <div className="py-12 flex flex-col items-center justify-center text-center">
+            <ArrowUpRight size={32} weight="bold" className="text-ink/20 mb-2" />
+            <p className="text-ink/40 text-sm font-semibold">No transactions yet</p>
+            <p className="text-ink/30 text-xs font-semibold mt-0.5">
+              Open a month and add your first transaction
+            </p>
+          </div>
+        ) : (
+          recentTxs.map((tx, i) => (
+            <button
+              key={tx.id}
+              onClick={() => onMonthClick(tx.monthId)}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-yellow/10 transition-colors ${
+                i < recentTxs.length - 1 ? 'border-b border-ink/10' : ''
+              }`}
+            >
+              {/* Color indicator */}
+              <span
+                className={`w-2 h-2 rounded-full flex-shrink-0 border border-ink ${
+                  tx.type === 'income' ? 'bg-lime' : 'bg-pink'
+                }`}
+              />
+
+              {/* Label */}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-ink truncate">
+                  {tx.description || tx.categoryName || (tx.type === 'income' ? 'Income' : 'Expense')}
+                </p>
+                <p className="text-xs text-ink/40 font-semibold">
+                  {format(parseISO(tx.date), 'MMM d, yyyy')}
+                  {tx.categoryName && tx.type !== 'income' && (
+                    <span className="ml-1 text-ink/30">· {tx.categoryName}</span>
+                  )}
+                </p>
+              </div>
+
+              {/* Amount + month */}
+              <div className="text-right flex-shrink-0">
+                <p className={`text-sm font-black ${tx.type === 'income' ? 'text-lime' : 'text-pink'}`}>
+                  {tx.type === 'income' ? '+' : '-'}{fmt(tx.convertedAmount, tx.monthCurrency)}
+                </p>
+                <span className="text-[10px] font-black text-ink/30 uppercase tracking-wide">
+                  {tx.monthName}
+                </span>
+              </div>
+            </button>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const router = useRouter();
   const { months, createMonth } = useMonths();
-  useSettings(); // initialize settings
+  useSettings();
   const [showCreate, setShowCreate] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  if (!mounted) return <div className="min-h-screen bg-background" />;
+
+  const latestMonth = months[0];
+
+  function handleFab() {
+    if (latestMonth) {
+      router.push(`/months/${latestMonth.id}`);
+    } else {
+      setShowCreate(true);
+    }
+  }
 
   const sidebar = (
     <div className="flex flex-col h-full p-5">
-      {/* Logo */}
       <div className="pt-8 pb-5">
         <h1 className="font-display font-bold text-2xl text-ink tracking-tight">Montrack</h1>
         <p className="text-ink/40 text-xs font-semibold mt-0.5">Personal Finance Tracker</p>
@@ -137,7 +226,7 @@ export default function HomePage() {
 
   return (
     <PageLayout sidebar={sidebar}>
-      {/* Mobile header (hidden on desktop) */}
+      {/* Mobile header */}
       <header className="md:hidden flex items-center justify-between px-5 pt-14 pb-4">
         <div>
           <h1 className="font-display font-bold text-3xl text-ink tracking-tight">Montrack</h1>
@@ -153,7 +242,7 @@ export default function HomePage() {
         </button>
       </header>
 
-      {/* Mobile CTA button */}
+      {/* Mobile new month CTA */}
       <div className="md:hidden px-5 mt-2">
         <button
           onClick={() => setShowCreate(true)}
@@ -169,15 +258,15 @@ export default function HomePage() {
 
       {/* Desktop page header */}
       <div className="hidden md:block px-8 pt-10 pb-6">
-        <h2 className="font-display font-bold text-3xl text-ink">All Months</h2>
+        <h2 className="font-display font-bold text-3xl text-ink">Dashboard</h2>
         <p className="text-ink/40 text-sm font-semibold mt-1">
           {months.length} month{months.length !== 1 ? 's' : ''} tracked
         </p>
       </div>
 
-      {/* Month list */}
-      <div className="px-5 md:px-8 mt-6 md:mt-0 pb-10">
-        {months.length === 0 ? (
+      {months.length === 0 ? (
+        /* Empty state */
+        <div className="px-5 md:px-8">
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <CalendarBlank size={48} weight="bold" className="text-ink/20 mb-4" />
             <p className="font-display font-bold text-ink/40 text-lg">No months yet</p>
@@ -185,18 +274,44 @@ export default function HomePage() {
               Create your first month to get started
             </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {months.map((month) => (
-              <MonthCard
-                key={month.id}
-                month={month}
-                onClick={() => router.push(`/months/${month.id}`)}
-              />
-            ))}
+        </div>
+      ) : (
+        /* Content: mobile = stack, desktop = 2-column */
+        <div className="md:grid md:grid-cols-[1fr_360px] md:gap-6 md:items-start md:px-8">
+          {/* Left: Month cards */}
+          <div className="px-5 md:px-0 mt-6 md:mt-0 pb-4">
+            <h2 className="font-display font-bold text-base text-ink uppercase tracking-wider mb-3">
+              Months
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4">
+              {months.map((month) => (
+                <MonthCard
+                  key={month.id}
+                  month={month}
+                  onClick={() => router.push(`/months/${month.id}`)}
+                />
+              ))}
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Right: Recent transactions — mobile shows below cards, desktop shows as sticky side panel */}
+          <div className="px-5 md:px-0 mt-6 md:mt-0 pb-28 md:pb-10 md:sticky md:top-6">
+            <RecentTransactions
+              months={months}
+              onMonthClick={(id) => router.push(`/months/${id}`)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Mobile FAB — floating add button */}
+      <button
+        onClick={handleFab}
+        className="md:hidden fixed bottom-6 right-6 z-40 w-14 h-14 rounded-2xl border-2 border-ink bg-yellow flex items-center justify-center [box-shadow:4px_4px_0_#0A0A0A] hover:[box-shadow:6px_6px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[4px] active:translate-y-[4px] transition-all"
+        aria-label="Add transaction"
+      >
+        <Plus size={24} weight="bold" className="text-ink" />
+      </button>
 
       <CreateMonthModal
         isOpen={showCreate}

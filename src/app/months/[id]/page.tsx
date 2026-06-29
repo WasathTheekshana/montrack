@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, use, useMemo } from 'react';
+import { useState, use, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Plus } from '@phosphor-icons/react';
 import { format, parseISO } from 'date-fns';
@@ -40,6 +40,10 @@ export default function MonthPage({ params }: { params: Promise<{ id: string }> 
   const { id } = use(params);
   const router = useRouter();
 
+  // Defer all localStorage reads to client — prevents server/client HTML mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const month = monthRepository.findById(id);
   const { categories, addCategory, deleteCategory, togglePaid, byType } = useBudget(id);
   const { transactions, addTransaction, deleteTransaction } = useTransactions(id);
@@ -68,19 +72,26 @@ export default function MonthPage({ params }: { params: Promise<{ id: string }> 
     return dailySpendings(month.startDate, month.endDate, transactions, stats.totalIncome);
   }, [month, transactions, stats.totalIncome]);
 
+  // Before mount both server and client render the same shell — no hydration mismatch
+  if (!mounted) {
+    return <div className="min-h-screen bg-background" />;
+  }
+
   if (!month) {
     return (
-      <main className="max-w-md mx-auto min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <p className="font-display font-bold text-ink/40">Month not found</p>
-          <button
-            onClick={() => router.push('/')}
-            className="mt-4 text-sm font-bold text-ink underline"
-          >
-            Go home
-          </button>
+      <PageLayout sidebar={<div className="p-5 pt-12 font-display font-bold text-xl text-ink">Montrack</div>}>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center px-5">
+            <p className="font-display font-bold text-ink/40 text-lg">Month not found</p>
+            <button
+              onClick={() => router.push('/')}
+              className="mt-4 text-sm font-bold text-ink underline"
+            >
+              Go home
+            </button>
+          </div>
         </div>
-      </main>
+      </PageLayout>
     );
   }
 
@@ -205,6 +216,13 @@ export default function MonthPage({ params }: { params: Promise<{ id: string }> 
                   onAdd={() => setShowAddIncome(true)}
                   onDelete={deleteIncome}
                 />
+                <TransactionsSection
+                  transactions={transactions}
+                  categories={categories}
+                  currency={currency}
+                  onAdd={() => setShowAddTx(true)}
+                  onDelete={deleteTransaction}
+                />
                 <SpendingOverview summaries={summaries} currency={currency} />
               </div>
               <div className="hidden md:block">
@@ -295,6 +313,15 @@ export default function MonthPage({ params }: { params: Promise<{ id: string }> 
           </div>
         )}
       </div>
+
+      {/* Mobile FAB */}
+      <button
+        onClick={() => setShowAddTx(true)}
+        className="md:hidden fixed bottom-6 right-6 z-40 w-14 h-14 rounded-2xl border-2 border-ink bg-yellow flex items-center justify-center [box-shadow:4px_4px_0_#0A0A0A] hover:[box-shadow:6px_6px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[4px] active:translate-y-[4px] transition-all"
+        aria-label="Add transaction"
+      >
+        <Plus size={24} weight="bold" className="text-ink" />
+      </button>
 
       <AddTransactionModal
         isOpen={showAddTx}
