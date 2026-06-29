@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     'Montrack is an open-source money tracker PWA that helps you manage income, expenses, and savings with clarity.',
   url: 'https://montrack.app',
-  themeColor: '#00E5A0',
-  backgroundColor: '#070B14',
+  themeColor: '#FFE135',
+  backgroundColor: '#FFE135',
   version: '0.1.0',
 };

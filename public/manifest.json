@@ -4,8 +4,8 @@
   "description": "Track your money, own your future.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070B14",
-  "theme_color": "#00E5A0",
+  "background_color": "#FFE135",
+  "theme_color": "#FFE135",
   "orientation": "portrait",
   "categories": ["finance", "productivity"],
   "icons": [
@@ -26,7 +26,6 @@
       "purpose": "maskable"
     }
   ],
-  "screenshots": [],
   "shortcuts": [
     {
       "name": "Add Expense",

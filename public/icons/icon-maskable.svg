@@ -1,13 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00E5A0"/>
-      <stop offset="100%" stop-color="#8B5CF6"/>
-    </linearGradient>
-  </defs>
-  <!-- Full bleed background for maskable -->
-  <rect width="512" height="512" fill="#070B14"/>
-  <rect width="512" height="512" fill="url(#g1)" opacity="0.15"/>
-  <!-- Safe zone: 80% centered (40px padding on 512) -->
-  <text x="256" y="330" font-family="system-ui, sans-serif" font-size="240" font-weight="800" text-anchor="middle" fill="url(#g1)">M</text>
+  <!-- Full-bleed yellow — safe zone is 80% (40px inset on each side) -->
+  <rect width="512" height="512" fill="#FFE135"/>
+  <!-- Black horizontal stripe accent -->
+  <rect x="0" y="300" width="512" height="212" fill="#0A0A0A" opacity="0.06"/>
+  <!-- M centered within the safe zone -->
+  <text x="256" y="360" font-family="Arial Black, Arial, sans-serif" font-size="290" font-weight="900" text-anchor="middle" fill="#0A0A0A">M</text>
 </svg>

@@ -1,12 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-  <defs>
-    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00E5A0"/>
-      <stop offset="100%" stop-color="#8B5CF6"/>
-    </linearGradient>
-  </defs>
-  <rect width="192" height="192" rx="40" fill="#070B14"/>
-  <rect width="192" height="192" rx="40" fill="url(#g1)" opacity="0.15"/>
-  <!-- M letter mark -->
-  <text x="96" y="130" font-family="system-ui, sans-serif" font-size="110" font-weight="800" text-anchor="middle" fill="url(#g1)">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="192" height="192">
+  <!-- Brutalist offset shadow -->
+  <rect x="12" y="12" width="180" height="180" rx="36" fill="#0A0A0A"/>
+  <!-- Yellow card with black border -->
+  <rect x="0" y="0" width="180" height="180" rx="36" fill="#FFE135" stroke="#0A0A0A" stroke-width="10"/>
+  <!-- Bold M lettermark -->
+  <text x="90" y="142" font-family="Arial Black, Arial, sans-serif" font-size="114" font-weight="900" text-anchor="middle" fill="#0A0A0A">M</text>
 </svg>
