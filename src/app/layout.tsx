@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-white overflow-x-hidden">{children}</body>
+      <body className="min-h-full bg-background text-ink overflow-x-hidden">{children}</body>
     </html>
   );
 }
