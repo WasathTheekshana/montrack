@@ -1,8 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Full-bleed yellow — safe zone is 80% (40px inset on each side) -->
+  <!-- Full bleed yellow — OS applies its own mask shape -->
   <rect width="512" height="512" fill="#FFE135"/>
-  <!-- Black horizontal stripe accent -->
-  <rect x="0" y="300" width="512" height="212" fill="#0A0A0A" opacity="0.06"/>
-  <!-- M centered within the safe zone -->
   <text x="256" y="360" font-family="Arial Black, Arial, sans-serif" font-size="290" font-weight="900" text-anchor="middle" fill="#0A0A0A">M</text>
 </svg>
