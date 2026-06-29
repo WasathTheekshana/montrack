@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Gear } from '@phosphor-icons/react';
+import { ArrowLeft, Gear, Heart } from '@phosphor-icons/react';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { SUPPORTED_CURRENCIES } from '@/lib/currency';
@@ -46,13 +46,20 @@ export default function SettingsPage() {
         )}
       </div>
 
-      <div className="border-t-2 border-ink/10 pt-4 mt-4">
+      <div className="border-t-2 border-ink/10 pt-4 mt-4 space-y-1">
         <button
           onClick={() => router.push('/')}
           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-ink/5 transition-colors"
         >
           <ArrowLeft size={14} weight="bold" />
           Back to Home
+        </button>
+        <button
+          onClick={() => router.push('/about')}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-ink/5 transition-colors"
+        >
+          <Heart size={16} weight="bold" />
+          About
         </button>
       </div>
     </div>
@@ -98,15 +105,18 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border-2 border-ink bg-yellow [box-shadow:3px_3px_0_#0A0A0A] p-5">
+        <button
+          onClick={() => router.push('/about')}
+          className="w-full text-left rounded-2xl border-2 border-ink bg-yellow [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all p-5"
+        >
           <h2 className="font-display font-bold text-base text-ink">About Montrack</h2>
           <p className="text-sm text-ink/60 font-semibold mt-1">
             Open-source personal finance tracker. All data is stored locally on your device.
           </p>
           <p className="text-xs text-ink/40 font-bold mt-3 uppercase tracking-wider">
-            v0.1.0 · Local Storage
+            v0.1.0 · View about page →
           </p>
-        </div>
+        </button>
       </div>
     </PageLayout>
   );

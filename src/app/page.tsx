@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Gear, CalendarBlank, ArrowRight, ArrowUpRight, Trash } from '@phosphor-icons/react';
+import { Plus, Gear, CalendarBlank, ArrowRight, ArrowUpRight, Trash, Heart } from '@phosphor-icons/react';
 import { format, parseISO } from 'date-fns';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { useSettings } from '@/lib/hooks/useSettings';
@@ -254,13 +254,20 @@ export default function HomePage() {
         )}
       </div>
 
-      <div className="border-t-2 border-ink/10 pt-4 mt-4">
+      <div className="border-t-2 border-ink/10 pt-4 mt-4 space-y-1">
         <button
           onClick={() => router.push('/settings')}
           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-ink/5 transition-colors"
         >
           <Gear size={16} weight="bold" />
           Settings
+        </button>
+        <button
+          onClick={() => router.push('/about')}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-ink/5 transition-colors"
+        >
+          <Heart size={16} weight="bold" />
+          About
         </button>
       </div>
     </div>
