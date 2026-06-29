@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Gear, CalendarBlank, ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
+import { Plus, Gear, CalendarBlank, ArrowRight, ArrowUpRight, Trash } from '@phosphor-icons/react';
 import { format, parseISO } from 'date-fns';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { useSettings } from '@/lib/hooks/useSettings';
@@ -15,7 +15,16 @@ import { incomeRepository } from '@/lib/repositories/incomeRepository';
 import { monthStats } from '@/lib/calculations';
 import type { Month } from '@/types';
 
-function MonthCard({ month, onClick }: { month: Month; onClick: () => void }) {
+function MonthCard({
+  month,
+  onClick,
+  onDelete,
+}: {
+  month: Month;
+  onClick: () => void;
+  onDelete: () => void;
+}) {
+  const [confirming, setConfirming] = useState(false);
   const transactions = transactionRepository.findByMonth(month.id);
   const categories = budgetRepository.findByMonth(month.id);
   const incomes = incomeRepository.findByMonth(month.id);
@@ -26,54 +35,87 @@ function MonthCard({ month, onClick }: { month: Month; onClick: () => void }) {
       : 0;
 
   return (
-    <button
-      onClick={onClick}
-      className="w-full text-left rounded-2xl border-2 border-ink bg-surface [box-shadow:4px_4px_0_#0A0A0A] hover:[box-shadow:6px_6px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[4px] active:translate-y-[4px] transition-all overflow-hidden"
-    >
+    <div className="rounded-2xl border-2 border-ink bg-surface [box-shadow:4px_4px_0_#0A0A0A] overflow-hidden">
+      {/* Header — click opens month, trash icon in corner */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-ink/10">
-        <div>
+        <button
+          onClick={onClick}
+          className="flex-1 min-w-0 text-left hover:opacity-70 transition-opacity"
+        >
           <h3 className="font-display font-bold text-lg text-ink">{month.name}</h3>
           <p className="text-ink/40 text-xs font-semibold">
             {format(parseISO(month.startDate), 'MMM d')} –{' '}
             {format(parseISO(month.endDate), 'MMM d, yyyy')}
           </p>
-        </div>
-        <ArrowRight size={20} weight="bold" className="text-ink/30" />
+        </button>
+
+        {confirming ? (
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            <button
+              onClick={() => { onDelete(); setConfirming(false); }}
+              className="px-2.5 py-1 rounded-lg border-2 border-ink bg-pink text-white text-xs font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+            >
+              Delete
+            </button>
+            <button
+              onClick={() => setConfirming(false)}
+              className="px-2.5 py-1 rounded-lg border-2 border-ink bg-surface text-ink text-xs font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            <button
+              onClick={() => setConfirming(true)}
+              className="w-8 h-8 rounded-lg border-2 border-ink/20 flex items-center justify-center text-ink/30 hover:border-pink hover:text-pink hover:bg-pink/10 transition-all"
+              aria-label="Delete month"
+            >
+              <Trash size={14} weight="bold" />
+            </button>
+            <button onClick={onClick} className="text-ink/30 hover:text-ink transition-colors">
+              <ArrowRight size={20} weight="bold" />
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-3 divide-x-2 divide-ink/10">
-        <div className="px-4 py-3">
-          <p className="text-xs text-ink/40 font-bold uppercase">Income</p>
-          <p className="font-display font-bold text-sm text-ink mt-0.5">
-            {fmt(stats.totalIncome, month.baseCurrency)}
-          </p>
+      {/* Stats — clicking anywhere navigates */}
+      <button onClick={onClick} className="w-full text-left">
+        <div className="grid grid-cols-3 divide-x-2 divide-ink/10">
+          <div className="px-4 py-3">
+            <p className="text-xs text-ink/40 font-bold uppercase">Income</p>
+            <p className="font-display font-bold text-sm text-ink mt-0.5">
+              {fmt(stats.totalIncome, month.baseCurrency)}
+            </p>
+          </div>
+          <div className="px-4 py-3">
+            <p className="text-xs text-ink/40 font-bold uppercase">Spent</p>
+            <p className="font-display font-bold text-sm text-pink mt-0.5">
+              {fmt(stats.totalExpenses, month.baseCurrency)}
+            </p>
+          </div>
+          <div className="px-4 py-3">
+            <p className="text-xs text-ink/40 font-bold uppercase">Left</p>
+            <p className={`font-display font-bold text-sm mt-0.5 ${stats.leftToSpend < 0 ? 'text-pink' : 'text-ink'}`}>
+              {fmt(Math.abs(stats.leftToSpend), month.baseCurrency)}
+            </p>
+          </div>
         </div>
-        <div className="px-4 py-3">
-          <p className="text-xs text-ink/40 font-bold uppercase">Spent</p>
-          <p className="font-display font-bold text-sm text-pink mt-0.5">
-            {fmt(stats.totalExpenses, month.baseCurrency)}
-          </p>
-        </div>
-        <div className="px-4 py-3">
-          <p className="text-xs text-ink/40 font-bold uppercase">Left</p>
-          <p className={`font-display font-bold text-sm mt-0.5 ${stats.leftToSpend < 0 ? 'text-pink' : 'text-ink'}`}>
-            {fmt(Math.abs(stats.leftToSpend), month.baseCurrency)}
-          </p>
-        </div>
-      </div>
 
-      <div className="px-4 pb-4">
-        <div className="h-2 bg-ink/10 rounded-full overflow-hidden border border-ink/10">
-          <div
-            className={`h-full rounded-full transition-all ${spendPct > 90 ? 'bg-pink' : 'bg-lime'}`}
-            style={{ width: `${spendPct}%` }}
-          />
+        <div className="px-4 pb-4">
+          <div className="h-2 bg-ink/10 rounded-full overflow-hidden border border-ink/10">
+            <div
+              className={`h-full rounded-full transition-all ${spendPct > 90 ? 'bg-pink' : 'bg-lime'}`}
+              style={{ width: `${spendPct}%` }}
+            />
+          </div>
+          <p className="text-[10px] text-ink/40 font-bold mt-1">
+            {spendPct.toFixed(0)}% of income spent
+          </p>
         </div>
-        <p className="text-[10px] text-ink/40 font-bold mt-1">
-          {spendPct.toFixed(0)}% of income spent
-        </p>
-      </div>
-    </button>
+      </button>
+    </div>
   );
 }
 
@@ -156,7 +198,7 @@ function RecentTransactions({ months, onMonthClick }: { months: Month[]; onMonth
 
 export default function HomePage() {
   const router = useRouter();
-  const { months, createMonth } = useMonths();
+  const { months, createMonth, deleteMonth } = useMonths();
   useSettings();
   const [showCreate, setShowCreate] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -289,6 +331,7 @@ export default function HomePage() {
                   key={month.id}
                   month={month}
                   onClick={() => router.push(`/months/${month.id}`)}
+                  onDelete={() => deleteMonth(month.id)}
                 />
               ))}
             </div>
