@@ -16,9 +16,10 @@ A clear and concise description of what the bug is.
 What did you expect to happen?
 
 **Screenshots**
-If applicable, add screenshots.
+If applicable, add screenshots to help explain the problem.
 
 **Environment**
-- OS: [e.g. macOS 14]
-- Browser: [e.g. Chrome 124]
-- Node version: [e.g. 20.x]
+- OS: [e.g. macOS 15, Windows 11]
+- Browser: [e.g. Chrome 126, Safari 17]
+- Device: [e.g. iPhone 15, Desktop]
+- Installed as PWA: [yes / no]

@@ -1,0 +1,473 @@
+{
+  "version": 1,
+  "exportedAt": "2026-07-01T10:30:00.000Z",
+  "settings": {
+    "baseCurrency": "LKR"
+  },
+  "notificationSettings": {
+    "enabled": true,
+    "reminderTime": "20:00",
+    "lastFired": ""
+  },
+  "months": [
+    {
+      "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+      "name": "June 2026",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-30",
+      "baseCurrency": "LKR",
+      "createdAt": "2026-06-01T08:00:00.000Z"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "May 2026",
+      "startDate": "2026-05-01",
+      "endDate": "2026-05-31",
+      "baseCurrency": "LKR",
+      "createdAt": "2026-05-01T08:00:00.000Z"
+    },
+    {
+      "id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      "name": "April 2026",
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-30",
+      "baseCurrency": "LKR",
+      "createdAt": "2026-04-01T08:00:00.000Z"
+    }
+  ],
+  "income": {
+    "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11": [
+      {
+        "id": "inc-j01-0000-0000-000000000001",
+        "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "name": "Monthly Salary",
+        "payday": "2026-06-05",
+        "startDay": "2026-06-01",
+        "expectedAmount": 175000
+      },
+      {
+        "id": "inc-j02-0000-0000-000000000002",
+        "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "name": "Freelance — UI Project",
+        "payday": "2026-06-20",
+        "startDay": "2026-06-20",
+        "expectedAmount": 77500
+      }
+    ],
+    "550e8400-e29b-41d4-a716-446655440000": [
+      {
+        "id": "inc-m01-0000-0000-000000000001",
+        "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "name": "Monthly Salary",
+        "payday": "2026-05-05",
+        "startDay": "2026-05-01",
+        "expectedAmount": 175000
+      },
+      {
+        "id": "inc-m02-0000-0000-000000000002",
+        "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "name": "Freelance — Logo Design",
+        "payday": "2026-05-18",
+        "startDay": "2026-05-18",
+        "expectedAmount": 30000
+      }
+    ],
+    "6ba7b810-9dad-11d1-80b4-00c04fd430c8": [
+      {
+        "id": "inc-a01-0000-0000-000000000001",
+        "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "name": "Monthly Salary",
+        "payday": "2026-04-05",
+        "startDay": "2026-04-01",
+        "expectedAmount": 175000
+      }
+    ]
+  },
+  "budget": {
+    "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11": [
+      { "id": "bgt-j01", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "bills", "name": "Rent", "budgetAmount": 35000, "order": 0, "isPaid": true, "dueDate": "2026-06-01" },
+      { "id": "bgt-j02", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "bills", "name": "Electricity", "budgetAmount": 4500, "order": 1, "isPaid": true, "dueDate": "2026-06-05" },
+      { "id": "bgt-j03", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "bills", "name": "Internet", "budgetAmount": 3500, "order": 2, "isPaid": true, "dueDate": "2026-06-03" },
+      { "id": "bgt-j04", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "bills", "name": "Mobile Plan", "budgetAmount": 2000, "order": 3, "isPaid": true },
+      { "id": "bgt-j05", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "expenses", "name": "Groceries", "budgetAmount": 18000, "order": 4, "isPaid": false },
+      { "id": "bgt-j06", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "expenses", "name": "Transport", "budgetAmount": 8500, "order": 5, "isPaid": false },
+      { "id": "bgt-j07", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "expenses", "name": "Dining Out", "budgetAmount": 12000, "order": 6, "isPaid": false },
+      { "id": "bgt-j08", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "expenses", "name": "Entertainment", "budgetAmount": 6000, "order": 7, "isPaid": false },
+      { "id": "bgt-j09", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "expenses", "name": "Personal Care", "budgetAmount": 3500, "order": 8, "isPaid": false },
+      { "id": "bgt-j10", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "savings", "name": "Emergency Fund", "budgetAmount": 15000, "order": 9, "isPaid": false },
+      { "id": "bgt-j11", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "savings", "name": "Vacation Fund", "budgetAmount": 10000, "order": 10, "isPaid": false },
+      { "id": "bgt-j12", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", "type": "debt", "name": "Credit Card", "budgetAmount": 20000, "order": 11, "isPaid": false, "dueDate": "2026-06-25" }
+    ],
+    "550e8400-e29b-41d4-a716-446655440000": [
+      { "id": "bgt-m01", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "bills", "name": "Rent", "budgetAmount": 35000, "order": 0, "isPaid": true, "dueDate": "2026-05-01" },
+      { "id": "bgt-m02", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "bills", "name": "Electricity", "budgetAmount": 4500, "order": 1, "isPaid": true, "dueDate": "2026-05-05" },
+      { "id": "bgt-m03", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "bills", "name": "Internet", "budgetAmount": 3500, "order": 2, "isPaid": true },
+      { "id": "bgt-m04", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "bills", "name": "Mobile Plan", "budgetAmount": 2000, "order": 3, "isPaid": true },
+      { "id": "bgt-m05", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "expenses", "name": "Groceries", "budgetAmount": 18000, "order": 4, "isPaid": false },
+      { "id": "bgt-m06", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "expenses", "name": "Transport", "budgetAmount": 8500, "order": 5, "isPaid": false },
+      { "id": "bgt-m07", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "expenses", "name": "Dining Out", "budgetAmount": 12000, "order": 6, "isPaid": false },
+      { "id": "bgt-m08", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "expenses", "name": "Entertainment", "budgetAmount": 6000, "order": 7, "isPaid": false },
+      { "id": "bgt-m09", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "expenses", "name": "Personal Care", "budgetAmount": 3500, "order": 8, "isPaid": false },
+      { "id": "bgt-m10", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "savings", "name": "Emergency Fund", "budgetAmount": 15000, "order": 9, "isPaid": false },
+      { "id": "bgt-m11", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "savings", "name": "Vacation Fund", "budgetAmount": 10000, "order": 10, "isPaid": false },
+      { "id": "bgt-m12", "monthId": "550e8400-e29b-41d4-a716-446655440000", "type": "debt", "name": "Credit Card", "budgetAmount": 20000, "order": 11, "isPaid": true, "dueDate": "2026-05-25" }
+    ],
+    "6ba7b810-9dad-11d1-80b4-00c04fd430c8": [
+      { "id": "bgt-a01", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "bills", "name": "Rent", "budgetAmount": 35000, "order": 0, "isPaid": true, "dueDate": "2026-04-01" },
+      { "id": "bgt-a02", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "bills", "name": "Electricity", "budgetAmount": 4500, "order": 1, "isPaid": true },
+      { "id": "bgt-a03", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "bills", "name": "Internet", "budgetAmount": 3500, "order": 2, "isPaid": true },
+      { "id": "bgt-a04", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "bills", "name": "Mobile Plan", "budgetAmount": 2000, "order": 3, "isPaid": true },
+      { "id": "bgt-a05", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "expenses", "name": "Groceries", "budgetAmount": 18000, "order": 4, "isPaid": false },
+      { "id": "bgt-a06", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "expenses", "name": "Transport", "budgetAmount": 8500, "order": 5, "isPaid": false },
+      { "id": "bgt-a07", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "expenses", "name": "Dining Out", "budgetAmount": 12000, "order": 6, "isPaid": false },
+      { "id": "bgt-a08", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "expenses", "name": "Entertainment", "budgetAmount": 6000, "order": 7, "isPaid": false },
+      { "id": "bgt-a09", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "savings", "name": "Emergency Fund", "budgetAmount": 15000, "order": 8, "isPaid": false },
+      { "id": "bgt-a10", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "savings", "name": "Vacation Fund", "budgetAmount": 10000, "order": 9, "isPaid": false },
+      { "id": "bgt-a11", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8", "type": "debt", "name": "Credit Card", "budgetAmount": 20000, "order": 10, "isPaid": true, "dueDate": "2026-04-25" }
+    ]
+  },
+  "transactions": {
+    "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11": [
+      {
+        "id": "tx-j01", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-05", "type": "income",
+        "originalAmount": 175000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 175000,
+        "budgetCategoryId": "", "description": "Monthly Salary",
+        "createdAt": "2026-06-05T09:00:00.000Z"
+      },
+      {
+        "id": "tx-j02", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-20", "type": "income",
+        "originalAmount": 250, "currency": "USD", "exchangeRate": 310, "convertedAmount": 77500,
+        "budgetCategoryId": "", "description": "Freelance — UI Project",
+        "createdAt": "2026-06-20T14:00:00.000Z"
+      },
+      {
+        "id": "tx-j03", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-01", "type": "expense",
+        "originalAmount": 35000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 35000,
+        "budgetCategoryId": "bgt-j01", "description": "June Rent",
+        "createdAt": "2026-06-01T09:00:00.000Z"
+      },
+      {
+        "id": "tx-j04", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-03", "type": "expense",
+        "originalAmount": 4150, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 4150,
+        "budgetCategoryId": "bgt-j02", "description": "CEB Electricity Bill",
+        "createdAt": "2026-06-03T10:00:00.000Z"
+      },
+      {
+        "id": "tx-j05", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-03", "type": "expense",
+        "originalAmount": 3500, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3500,
+        "budgetCategoryId": "bgt-j03", "description": "Dialog Broadband",
+        "createdAt": "2026-06-03T10:30:00.000Z"
+      },
+      {
+        "id": "tx-j06", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-05", "type": "expense",
+        "originalAmount": 1800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1800,
+        "budgetCategoryId": "bgt-j04", "description": "Mobitel Recharge",
+        "createdAt": "2026-06-05T11:00:00.000Z"
+      },
+      {
+        "id": "tx-j07", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-07", "type": "expense",
+        "originalAmount": 8200, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 8200,
+        "budgetCategoryId": "bgt-j05", "description": "Keells Supermarket",
+        "createdAt": "2026-06-07T17:00:00.000Z"
+      },
+      {
+        "id": "tx-j08", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-08", "type": "expense",
+        "originalAmount": 2100, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 2100,
+        "budgetCategoryId": "bgt-j06", "description": "Uber — Office commute",
+        "createdAt": "2026-06-08T08:30:00.000Z"
+      },
+      {
+        "id": "tx-j09", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-10", "type": "expense",
+        "originalAmount": 3600, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3600,
+        "budgetCategoryId": "bgt-j07", "description": "Team lunch — Nuga Gama",
+        "createdAt": "2026-06-10T13:00:00.000Z"
+      },
+      {
+        "id": "tx-j10", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-12", "type": "expense",
+        "originalAmount": 15.99, "currency": "USD", "exchangeRate": 310, "convertedAmount": 4956.9,
+        "budgetCategoryId": "bgt-j08", "description": "Netflix subscription",
+        "createdAt": "2026-06-12T00:00:00.000Z"
+      },
+      {
+        "id": "tx-j11", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-14", "type": "expense",
+        "originalAmount": 1950, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1950,
+        "budgetCategoryId": "bgt-j09", "description": "Pharmacy — vitamins",
+        "createdAt": "2026-06-14T16:00:00.000Z"
+      },
+      {
+        "id": "tx-j12", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-15", "type": "expense",
+        "originalAmount": 6800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 6800,
+        "budgetCategoryId": "bgt-j05", "description": "Arpico Supermarket",
+        "createdAt": "2026-06-15T18:00:00.000Z"
+      },
+      {
+        "id": "tx-j13", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-17", "type": "expense",
+        "originalAmount": 1650, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1650,
+        "budgetCategoryId": "bgt-j06", "description": "PickMe — evening ride",
+        "createdAt": "2026-06-17T19:00:00.000Z"
+      },
+      {
+        "id": "tx-j14", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-18", "type": "expense",
+        "originalAmount": 1400, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1400,
+        "budgetCategoryId": "bgt-j07", "description": "Coffee meeting",
+        "createdAt": "2026-06-18T11:00:00.000Z"
+      },
+      {
+        "id": "tx-j15", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-20", "type": "expense",
+        "originalAmount": 15000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 15000,
+        "budgetCategoryId": "bgt-j10", "description": "Emergency fund transfer",
+        "createdAt": "2026-06-20T10:00:00.000Z"
+      },
+      {
+        "id": "tx-j16", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-22", "type": "expense",
+        "originalAmount": 10000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 10000,
+        "budgetCategoryId": "bgt-j11", "description": "Vacation fund — Maldives trip",
+        "createdAt": "2026-06-22T10:00:00.000Z"
+      },
+      {
+        "id": "tx-j17", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-25", "type": "expense",
+        "originalAmount": 20000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 20000,
+        "budgetCategoryId": "bgt-j12", "description": "Credit card payment",
+        "createdAt": "2026-06-25T09:00:00.000Z"
+      },
+      {
+        "id": "tx-j18", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-27", "type": "expense",
+        "originalAmount": 4800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 4800,
+        "budgetCategoryId": "bgt-j07", "description": "Dinner — Cinnamon Grand",
+        "createdAt": "2026-06-27T20:00:00.000Z"
+      },
+      {
+        "id": "tx-j19", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-28", "type": "expense",
+        "originalAmount": 34.99, "currency": "USD", "exchangeRate": 310, "convertedAmount": 10846.9,
+        "budgetCategoryId": "bgt-j08", "description": "Amazon — tech accessories",
+        "createdAt": "2026-06-28T14:00:00.000Z"
+      },
+      {
+        "id": "tx-j20", "monthId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "date": "2026-06-30", "type": "expense",
+        "originalAmount": 2200, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 2200,
+        "budgetCategoryId": "bgt-j06", "description": "PickMe — month end",
+        "createdAt": "2026-06-30T18:00:00.000Z"
+      }
+    ],
+    "550e8400-e29b-41d4-a716-446655440000": [
+      {
+        "id": "tx-m01", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-05", "type": "income",
+        "originalAmount": 175000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 175000,
+        "budgetCategoryId": "", "description": "Monthly Salary",
+        "createdAt": "2026-05-05T09:00:00.000Z"
+      },
+      {
+        "id": "tx-m02", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-18", "type": "income",
+        "originalAmount": 30000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 30000,
+        "budgetCategoryId": "", "description": "Freelance — Logo Design",
+        "createdAt": "2026-05-18T14:00:00.000Z"
+      },
+      {
+        "id": "tx-m03", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-01", "type": "expense",
+        "originalAmount": 35000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 35000,
+        "budgetCategoryId": "bgt-m01", "description": "May Rent",
+        "createdAt": "2026-05-01T09:00:00.000Z"
+      },
+      {
+        "id": "tx-m04", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-04", "type": "expense",
+        "originalAmount": 4350, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 4350,
+        "budgetCategoryId": "bgt-m02", "description": "CEB Electricity Bill",
+        "createdAt": "2026-05-04T10:00:00.000Z"
+      },
+      {
+        "id": "tx-m05", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-04", "type": "expense",
+        "originalAmount": 3500, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3500,
+        "budgetCategoryId": "bgt-m03", "description": "Dialog Broadband",
+        "createdAt": "2026-05-04T10:30:00.000Z"
+      },
+      {
+        "id": "tx-m06", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-06", "type": "expense",
+        "originalAmount": 1800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1800,
+        "budgetCategoryId": "bgt-m04", "description": "Mobitel Recharge",
+        "createdAt": "2026-05-06T11:00:00.000Z"
+      },
+      {
+        "id": "tx-m07", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-09", "type": "expense",
+        "originalAmount": 9200, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 9200,
+        "budgetCategoryId": "bgt-m05", "description": "Keells Supermarket",
+        "createdAt": "2026-05-09T17:00:00.000Z"
+      },
+      {
+        "id": "tx-m08", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-12", "type": "expense",
+        "originalAmount": 1900, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1900,
+        "budgetCategoryId": "bgt-m06", "description": "Uber — weekly commute",
+        "createdAt": "2026-05-12T08:00:00.000Z"
+      },
+      {
+        "id": "tx-m09", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-14", "type": "expense",
+        "originalAmount": 2800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 2800,
+        "budgetCategoryId": "bgt-m07", "description": "Burger King — lunch",
+        "createdAt": "2026-05-14T12:30:00.000Z"
+      },
+      {
+        "id": "tx-m10", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-15", "type": "expense",
+        "originalAmount": 15.99, "currency": "USD", "exchangeRate": 308, "convertedAmount": 4924.92,
+        "budgetCategoryId": "bgt-m08", "description": "Netflix subscription",
+        "createdAt": "2026-05-15T00:00:00.000Z"
+      },
+      {
+        "id": "tx-m11", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-19", "type": "expense",
+        "originalAmount": 5600, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 5600,
+        "budgetCategoryId": "bgt-m05", "description": "Arpico Supermarket",
+        "createdAt": "2026-05-19T17:30:00.000Z"
+      },
+      {
+        "id": "tx-m12", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-20", "type": "expense",
+        "originalAmount": 2100, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 2100,
+        "budgetCategoryId": "bgt-m09", "description": "Haircut + grooming",
+        "createdAt": "2026-05-20T16:00:00.000Z"
+      },
+      {
+        "id": "tx-m13", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-21", "type": "expense",
+        "originalAmount": 15000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 15000,
+        "budgetCategoryId": "bgt-m10", "description": "Emergency fund transfer",
+        "createdAt": "2026-05-21T10:00:00.000Z"
+      },
+      {
+        "id": "tx-m14", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-22", "type": "expense",
+        "originalAmount": 10000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 10000,
+        "budgetCategoryId": "bgt-m11", "description": "Vacation fund",
+        "createdAt": "2026-05-22T10:00:00.000Z"
+      },
+      {
+        "id": "tx-m15", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-25", "type": "expense",
+        "originalAmount": 20000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 20000,
+        "budgetCategoryId": "bgt-m12", "description": "Credit card payment",
+        "createdAt": "2026-05-25T09:00:00.000Z"
+      },
+      {
+        "id": "tx-m16", "monthId": "550e8400-e29b-41d4-a716-446655440000",
+        "date": "2026-05-29", "type": "expense",
+        "originalAmount": 3800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3800,
+        "budgetCategoryId": "bgt-m07", "description": "Dinner — Ministry of Crab",
+        "createdAt": "2026-05-29T20:00:00.000Z"
+      }
+    ],
+    "6ba7b810-9dad-11d1-80b4-00c04fd430c8": [
+      {
+        "id": "tx-a01", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-05", "type": "income",
+        "originalAmount": 175000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 175000,
+        "budgetCategoryId": "", "description": "Monthly Salary",
+        "createdAt": "2026-04-05T09:00:00.000Z"
+      },
+      {
+        "id": "tx-a02", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-01", "type": "expense",
+        "originalAmount": 35000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 35000,
+        "budgetCategoryId": "bgt-a01", "description": "April Rent",
+        "createdAt": "2026-04-01T09:00:00.000Z"
+      },
+      {
+        "id": "tx-a03", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-03", "type": "expense",
+        "originalAmount": 3900, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3900,
+        "budgetCategoryId": "bgt-a02", "description": "CEB Electricity Bill",
+        "createdAt": "2026-04-03T10:00:00.000Z"
+      },
+      {
+        "id": "tx-a04", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-03", "type": "expense",
+        "originalAmount": 3500, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3500,
+        "budgetCategoryId": "bgt-a03", "description": "Dialog Broadband",
+        "createdAt": "2026-04-03T10:30:00.000Z"
+      },
+      {
+        "id": "tx-a05", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-06", "type": "expense",
+        "originalAmount": 1800, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 1800,
+        "budgetCategoryId": "bgt-a04", "description": "Mobitel Recharge",
+        "createdAt": "2026-04-06T11:00:00.000Z"
+      },
+      {
+        "id": "tx-a06", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-08", "type": "expense",
+        "originalAmount": 11500, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 11500,
+        "budgetCategoryId": "bgt-a05", "description": "Monthly groceries",
+        "createdAt": "2026-04-08T17:00:00.000Z"
+      },
+      {
+        "id": "tx-a07", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-12", "type": "expense",
+        "originalAmount": 3200, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 3200,
+        "budgetCategoryId": "bgt-a06", "description": "Uber — weekly rides",
+        "createdAt": "2026-04-12T08:00:00.000Z"
+      },
+      {
+        "id": "tx-a08", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-15", "type": "expense",
+        "originalAmount": 5400, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 5400,
+        "budgetCategoryId": "bgt-a07", "description": "Avurudu dinner — family",
+        "createdAt": "2026-04-15T19:00:00.000Z"
+      },
+      {
+        "id": "tx-a09", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-15", "type": "expense",
+        "originalAmount": 15.99, "currency": "USD", "exchangeRate": 305, "convertedAmount": 4876.95,
+        "budgetCategoryId": "bgt-a08", "description": "Netflix subscription",
+        "createdAt": "2026-04-15T00:00:00.000Z"
+      },
+      {
+        "id": "tx-a10", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-20", "type": "expense",
+        "originalAmount": 15000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 15000,
+        "budgetCategoryId": "bgt-a09", "description": "Emergency fund transfer",
+        "createdAt": "2026-04-20T10:00:00.000Z"
+      },
+      {
+        "id": "tx-a11", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-22", "type": "expense",
+        "originalAmount": 10000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 10000,
+        "budgetCategoryId": "bgt-a10", "description": "Vacation fund",
+        "createdAt": "2026-04-22T10:00:00.000Z"
+      },
+      {
+        "id": "tx-a12", "monthId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "date": "2026-04-25", "type": "expense",
+        "originalAmount": 20000, "currency": "LKR", "exchangeRate": 1, "convertedAmount": 20000,
+        "budgetCategoryId": "bgt-a11", "description": "Credit card payment",
+        "createdAt": "2026-04-25T09:00:00.000Z"
+      }
+    ]
+  }
+}

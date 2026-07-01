@@ -14,5 +14,7 @@
 
 - [ ] `yarn build` passes
 - [ ] `yarn lint` passes
-- [ ] Follows the minimal pastel design language
+- [ ] `yarn typecheck` passes
+- [ ] Follows the brutalist design language (yellow, pink, lime, black borders)
+- [ ] No new dependencies added without prior discussion
 - [ ] PR is focused on a single change
