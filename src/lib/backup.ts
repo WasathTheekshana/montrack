@@ -4,12 +4,14 @@ import { incomeRepository } from './repositories/incomeRepository';
 import { budgetRepository } from './repositories/budgetRepository';
 import { transactionRepository } from './repositories/transactionRepository';
 import type { Month, Income, BudgetCategory, Transaction, AppSettings } from '@/types';
+import type { NotificationSettings } from './hooks/useNotifications';
 
 export interface BackupData {
   version: number;
   exportedAt: string;
   months: Month[];
   settings: AppSettings | null;
+  notificationSettings: NotificationSettings | null;
   income: Record<string, Income[]>;
   budget: Record<string, BudgetCategory[]>;
   transactions: Record<string, Transaction[]>;
@@ -23,6 +25,7 @@ export function exportBackup(): void {
     exportedAt: new Date().toISOString(),
     months,
     settings: storage.get<AppSettings>(KEYS.settings),
+    notificationSettings: storage.get<NotificationSettings>(KEYS.notifications),
     income: Object.fromEntries(months.map((m) => [m.id, incomeRepository.findByMonth(m.id)])),
     budget: Object.fromEntries(months.map((m) => [m.id, budgetRepository.findByMonth(m.id)])),
     transactions: Object.fromEntries(months.map((m) => [m.id, transactionRepository.findByMonth(m.id)])),
@@ -46,6 +49,7 @@ export function clearAllData(): void {
   }
   storage.remove(KEYS.months);
   storage.remove(KEYS.settings);
+  storage.remove(KEYS.notifications);
 }
 
 export function importBackup(file: File): Promise<{ ok: boolean; error?: string; monthCount: number }> {
@@ -68,6 +72,11 @@ export function importBackup(file: File): Promise<{ ok: boolean; error?: string;
         // Restore settings
         if (data.settings) {
           storage.set(KEYS.settings, data.settings);
+        }
+
+        // Restore notification settings
+        if (data.notificationSettings) {
+          storage.set(KEYS.notifications, data.notificationSettings);
         }
 
         // Restore per-month data

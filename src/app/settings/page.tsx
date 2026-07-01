@@ -2,13 +2,14 @@
 
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple } from '@phosphor-icons/react';
+import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple, Bell, BellSlash } from '@phosphor-icons/react';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { SUPPORTED_CURRENCIES } from '@/lib/currency';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Select } from '@/components/ui/Select';
 import { exportBackup, importBackup, clearAllData } from '@/lib/backup';
+import { useNotifications } from '@/lib/hooks/useNotifications';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -20,6 +21,8 @@ export default function SettingsPage() {
   const [importedMonths, setImportedMonths] = useState(0);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [deleteState, setDeleteState] = useState<'idle' | 'warn' | 'confirm'>('idle');
+  const [testResult, setTestResult] = useState<'idle' | 'sent' | 'denied'>('idle');
+  const { supported: notifSupported, permission, settings: notifSettings, requestPermission, sendTest, updateSettings: updateNotifSettings } = useNotifications();
 
   const labelCls = 'block text-xs font-black text-ink/60 uppercase tracking-wider mb-1';
 
@@ -134,6 +137,99 @@ export default function SettingsPage() {
               Default for new months. Each month can have its own base currency.
             </p>
           </div>
+        </div>
+
+        {/* Notifications */}
+        <div className="rounded-2xl border-2 border-ink bg-surface [box-shadow:3px_3px_0_#0A0A0A] p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <Bell size={18} weight="bold" className="text-ink" />
+            <h2 className="font-display font-bold text-base text-ink">Reminders</h2>
+          </div>
+          <p className="text-xs text-ink/40 font-semibold mb-4">
+            Get a daily nudge to log your transactions.
+          </p>
+
+          {!notifSupported ? (
+            <p className="text-xs font-bold text-ink/40">Notifications are not supported in this browser.</p>
+          ) : (
+            <div className="space-y-4">
+
+              {/* Permission state */}
+              {permission === 'denied' && (
+                <div className="rounded-xl border-2 border-pink bg-pink/10 px-4 py-3">
+                  <p className="text-xs font-bold text-pink">
+                    Notifications are blocked. Enable them in your browser site settings.
+                  </p>
+                </div>
+              )}
+
+              {permission !== 'granted' && permission !== 'denied' && (
+                <button
+                  onClick={requestPermission}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-ink bg-yellow font-bold text-sm text-ink [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all"
+                >
+                  <Bell size={16} weight="bold" />
+                  Allow Notifications
+                </button>
+              )}
+
+              {permission === 'granted' && (
+                <>
+                  {/* Enable toggle */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-bold text-ink">Daily reminder</p>
+                      <p className="text-xs text-ink/40 font-semibold">Fire once per day at the time below</p>
+                    </div>
+                    <button
+                      onClick={() => updateNotifSettings({ enabled: !notifSettings.enabled })}
+                      className={`relative w-12 h-6 rounded-full border-2 border-ink transition-colors [box-shadow:2px_2px_0_#0A0A0A] ${
+                        notifSettings.enabled ? 'bg-lime' : 'bg-ink/10'
+                      }`}
+                    >
+                      <span
+                        className={`absolute top-0.5 w-4 h-4 rounded-full border-2 border-ink bg-white transition-all [box-shadow:1px_1px_0_#0A0A0A] ${
+                          notifSettings.enabled ? 'left-6' : 'left-0.5'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Time picker */}
+                  <div>
+                    <label className={labelCls}>Reminder time</label>
+                    <input
+                      type="time"
+                      value={notifSettings.reminderTime}
+                      onChange={(e) => updateNotifSettings({ reminderTime: e.target.value })}
+                      className="w-full border-2 border-ink rounded-xl px-3 py-2 text-sm font-semibold text-ink bg-background focus:outline-none focus:ring-2 focus:ring-yellow [box-shadow:2px_2px_0_#0A0A0A]"
+                    />
+                  </div>
+
+                  {/* Test button */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        const ok = sendTest();
+                        setTestResult(ok ? 'sent' : 'denied');
+                        setTimeout(() => setTestResult('idle'), 3000);
+                      }}
+                      className="flex items-center gap-2 py-2 px-4 rounded-xl border-2 border-ink bg-surface font-bold text-sm text-ink [box-shadow:2px_2px_0_#0A0A0A] hover:[box-shadow:4px_4px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                    >
+                      <Bell size={14} weight="bold" />
+                      Send test notification
+                    </button>
+                    {testResult === 'sent' && (
+                      <span className="text-xs font-black text-lime">✓ Sent!</span>
+                    )}
+                    {testResult === 'denied' && (
+                      <span className="text-xs font-black text-pink">✗ Blocked</span>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Backup & Restore */}

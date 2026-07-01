@@ -33,6 +33,7 @@ export const storage = {
 export const KEYS = {
   months: 'months',
   settings: 'settings',
+  notifications: 'notifications',
   income: (monthId: string) => `income:${monthId}`,
   budget: (monthId: string) => `budget:${monthId}`,
   transactions: (monthId: string) => `transactions:${monthId}`,
