@@ -1,19 +1,50 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Gear, Heart } from '@phosphor-icons/react';
+import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple } from '@phosphor-icons/react';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { SUPPORTED_CURRENCIES } from '@/lib/currency';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Select } from '@/components/ui/Select';
+import { exportBackup, importBackup, clearAllData } from '@/lib/backup';
 
 export default function SettingsPage() {
   const router = useRouter();
   const { settings, updateSettings } = useSettings();
-  const { months } = useMonths();
+  const { months, refresh } = useMonths();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [importState, setImportState] = useState<'idle' | 'confirm' | 'success' | 'error'>('idle');
+  const [importError, setImportError] = useState('');
+  const [importedMonths, setImportedMonths] = useState(0);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [deleteState, setDeleteState] = useState<'idle' | 'warn' | 'confirm'>('idle');
 
   const labelCls = 'block text-xs font-black text-ink/60 uppercase tracking-wider mb-1';
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setPendingFile(file);
+    setImportState('confirm');
+    e.target.value = '';
+  }
+
+  async function handleConfirmImport() {
+    if (!pendingFile) return;
+    setImportState('idle');
+    const result = await importBackup(pendingFile);
+    if (result.ok) {
+      setImportedMonths(result.monthCount);
+      setImportState('success');
+      refresh();
+    } else {
+      setImportError(result.error ?? 'Import failed.');
+      setImportState('error');
+    }
+    setPendingFile(null);
+  }
 
   const sidebar = (
     <div className="flex flex-col h-full p-5">
@@ -103,6 +134,155 @@ export default function SettingsPage() {
               Default for new months. Each month can have its own base currency.
             </p>
           </div>
+        </div>
+
+        {/* Backup & Restore */}
+        <div className="rounded-2xl border-2 border-ink bg-surface [box-shadow:3px_3px_0_#0A0A0A] p-5">
+          <h2 className="font-display font-bold text-base text-ink mb-1">Backup & Restore</h2>
+          <p className="text-xs text-ink/40 font-semibold mb-4">
+            Export all your months, budgets, and transactions to a JSON file. Import it later to restore everything.
+          </p>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={exportBackup}
+              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-ink bg-yellow font-bold text-sm text-ink [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all"
+            >
+              <DownloadSimple size={16} weight="bold" />
+              Export
+            </button>
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-ink bg-surface font-bold text-sm text-ink [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all"
+            >
+              <UploadSimple size={16} weight="bold" />
+              Import
+            </button>
+          </div>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            className="hidden"
+            onChange={handleFileSelect}
+          />
+
+          {/* Confirm overwrite */}
+          {importState === 'confirm' && (
+            <div className="mt-4 rounded-xl border-2 border-ink bg-yellow/20 p-4">
+              <p className="text-sm font-bold text-ink">
+                This will overwrite all existing data with <span className="text-pink">{pendingFile?.name}</span>. Continue?
+              </p>
+              <div className="flex gap-2 mt-3">
+                <button
+                  onClick={handleConfirmImport}
+                  className="flex-1 py-2 rounded-lg border-2 border-ink bg-pink text-white text-sm font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                >
+                  Yes, restore
+                </button>
+                <button
+                  onClick={() => { setImportState('idle'); setPendingFile(null); }}
+                  className="flex-1 py-2 rounded-lg border-2 border-ink bg-surface text-ink text-sm font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {importState === 'success' && (
+            <div className="mt-4 rounded-xl border-2 border-ink bg-lime/30 p-3">
+              <p className="text-sm font-bold text-ink">
+                ✓ Restored {importedMonths} month{importedMonths !== 1 ? 's' : ''} successfully.
+              </p>
+            </div>
+          )}
+
+          {importState === 'error' && (
+            <div className="mt-4 rounded-xl border-2 border-ink bg-pink/20 p-3">
+              <p className="text-sm font-bold text-ink">{importError}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Danger Zone */}
+        <div className="rounded-2xl border-2 border-pink bg-surface [box-shadow:3px_3px_0_#FF2D78] p-5">
+          <h2 className="font-display font-bold text-base text-pink mb-1">Danger Zone</h2>
+          <p className="text-xs text-ink/40 font-semibold mb-4">
+            Permanently deletes all months, budgets, transactions, and income entries from this device.
+          </p>
+
+          {deleteState === 'idle' && (
+            <button
+              onClick={() => setDeleteState('warn')}
+              className="flex items-center gap-2 py-2.5 px-4 rounded-xl border-2 border-pink bg-pink/10 text-pink font-bold text-sm hover:bg-pink hover:text-white [box-shadow:2px_2px_0_#FF2D78] active:[box-shadow:0px_0px_0_#FF2D78] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+            >
+              Delete All Data
+            </button>
+          )}
+
+          {deleteState === 'warn' && (
+            <div className="rounded-xl border-2 border-pink bg-pink/5 p-4 space-y-3">
+              <p className="text-sm font-bold text-ink">
+                ⚠️ This will permanently erase <span className="text-pink">all your data</span> — months, budgets, transactions, and income. This cannot be undone.
+              </p>
+              <p className="text-xs font-bold text-ink/50">
+                We recommend exporting a backup first before proceeding.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={exportBackup}
+                  className="flex items-center gap-1.5 py-2 px-3 rounded-lg border-2 border-ink bg-yellow text-ink text-xs font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                >
+                  <DownloadSimple size={13} weight="bold" />
+                  Export backup first
+                </button>
+                <button
+                  onClick={() => setDeleteState('confirm')}
+                  className="py-2 px-3 rounded-lg border-2 border-pink text-pink text-xs font-black hover:bg-pink hover:text-white transition-all"
+                >
+                  Skip, delete now
+                </button>
+              </div>
+              <button
+                onClick={() => setDeleteState('idle')}
+                className="text-xs font-bold text-ink/40 hover:text-ink transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          {deleteState === 'confirm' && (
+            <div className="rounded-xl border-2 border-pink bg-pink/10 p-4 space-y-3">
+              <p className="text-sm font-black text-pink">
+                Are you absolutely sure? Type to confirm below.
+              </p>
+              <p className="text-xs font-bold text-ink/50">
+                This action is irreversible. All local data will be gone.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    clearAllData();
+                    refresh();
+                    setDeleteState('idle');
+                  }}
+                  className="flex-1 py-2.5 rounded-xl border-2 border-pink bg-pink text-white text-sm font-black [box-shadow:3px_3px_0_#FF2D78] active:[box-shadow:0px_0px_0_#FF2D78] active:translate-x-[3px] active:translate-y-[3px] transition-all"
+                >
+                  Yes, delete everything
+                </button>
+                <button
+                  onClick={() => setDeleteState('idle')}
+                  className="px-4 py-2.5 rounded-xl border-2 border-ink bg-surface text-ink text-sm font-black [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         <button
