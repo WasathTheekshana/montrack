@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, GithubLogo, Gear, Code, Heart } from '@phosphor-icons/react';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 
 function DeveloperIllustration() {
   return (
@@ -53,7 +54,7 @@ export default function AboutPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  if (!mounted) return <div className="min-h-screen bg-background" />;
+  if (!mounted) return <LoadingScreen />;
 
   const sidebar = (
     <div className="flex flex-col h-full p-5">

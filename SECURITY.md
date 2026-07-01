@@ -12,7 +12,7 @@ Only the latest version of Montrack is actively maintained.
 
 Please do not report security vulnerabilities through public GitHub issues.
 
-Send a description of the issue to **wasath_theekshana@next.co.uk** with the subject line `[SECURITY] Montrack`.
+Send a description of the issue to **wasath.vt@gmail.com** with the subject line `[SECURITY] Montrack`.
 
 Include:
 - A description of the vulnerability

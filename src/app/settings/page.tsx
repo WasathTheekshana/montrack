@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple, Bell, BellSlash } from '@phosphor-icons/react';
 import { useSettings } from '@/lib/hooks/useSettings';
@@ -10,11 +10,14 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { Select } from '@/components/ui/Select';
 import { exportBackup, importBackup, clearAllData } from '@/lib/backup';
 import { useNotifications } from '@/lib/hooks/useNotifications';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 
 export default function SettingsPage() {
   const router = useRouter();
   const { settings, updateSettings } = useSettings();
   const { months, refresh } = useMonths();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importState, setImportState] = useState<'idle' | 'confirm' | 'success' | 'error'>('idle');
   const [importError, setImportError] = useState('');
@@ -23,6 +26,8 @@ export default function SettingsPage() {
   const [deleteState, setDeleteState] = useState<'idle' | 'warn' | 'confirm'>('idle');
   const [testResult, setTestResult] = useState<'idle' | 'sent' | 'denied'>('idle');
   const { supported: notifSupported, permission, settings: notifSettings, requestPermission, sendTest, updateSettings: updateNotifSettings } = useNotifications();
+
+  if (!mounted) return <LoadingScreen />;
 
   const labelCls = 'block text-xs font-black text-ink/60 uppercase tracking-wider mb-1';
 
