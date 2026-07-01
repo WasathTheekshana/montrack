@@ -38,6 +38,20 @@ body {
   overscroll-behavior: none;
 }
 
+/* Prevent iOS Safari from zooming the page when focusing any input */
+input, select, textarea {
+  font-size: max(16px, 1em);
+}
+
+/* Normalize date/time inputs on iOS — removes native tall chrome */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 0;
+}
+
 ::selection {
   background-color: #FFE135;
   color: #0A0A0A;
