@@ -29,6 +29,10 @@ html {
 
 body {
   background-color: #F5F0EB;
+  background-image:
+    linear-gradient(rgba(10,10,10,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: #0A0A0A;
   font-family: var(--font-sans), system-ui, sans-serif;
   overscroll-behavior: none;

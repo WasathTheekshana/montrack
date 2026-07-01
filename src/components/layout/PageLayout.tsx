@@ -5,7 +5,7 @@ interface PageLayoutProps {
 
 export function PageLayout({ sidebar, children }: PageLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       {/* Desktop sidebar */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-64 border-r-2 border-ink bg-surface z-20 overflow-y-auto">
         {sidebar}

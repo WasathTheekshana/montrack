@@ -41,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-full bg-background text-ink overflow-x-hidden">{children}</body>
+      <body suppressHydrationWarning className="min-h-full bg-background text-ink overflow-x-hidden">
+        {children}
+      </body>
     </html>
   );
 }

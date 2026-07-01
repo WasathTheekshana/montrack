@@ -5,6 +5,13 @@ export function LoadingScreen() {
     <div
       suppressHydrationWarning
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(10,10,10,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(10,10,10,0.05) 1px, transparent 1px)
+        `,
+        backgroundSize: '28px 28px',
+      }}
     >
       <div className="flex flex-col items-center gap-5">
         {/* Logo mark */}
