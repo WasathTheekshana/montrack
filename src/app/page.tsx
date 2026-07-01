@@ -7,6 +7,7 @@ import { format, parseISO } from 'date-fns';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { fmt } from '@/lib/currency';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { CreateMonthModal } from '@/components/modals/CreateMonthModal';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { transactionRepository } from '@/lib/repositories/transactionRepository';
@@ -204,7 +205,7 @@ export default function HomePage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  if (!mounted) return <div className="min-h-screen bg-background" />;
+  if (!mounted) return <LoadingScreen />;
 
   const latestMonth = months[0];
 

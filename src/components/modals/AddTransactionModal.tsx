@@ -81,8 +81,8 @@ export function AddTransactionModal({
   }
 
   const inputCls =
-    'w-full border-2 border-ink rounded-xl px-3 py-2.5 text-sm font-semibold text-ink bg-background focus:outline-none focus:ring-2 focus:ring-yellow [box-shadow:2px_2px_0_#0A0A0A]';
-  const labelCls = 'block text-xs font-black text-ink/60 uppercase tracking-wider mb-1';
+    'w-full border-2 border-ink rounded-xl px-3 py-2 sm:py-2.5 text-sm font-semibold text-ink bg-background focus:outline-none focus:ring-2 focus:ring-yellow [box-shadow:2px_2px_0_#0A0A0A]';
+  const labelCls = 'block text-[10px] sm:text-xs font-black text-ink/60 uppercase tracking-wider mb-1';
 
   const expenseCategories = categories.filter((c) =>
     ['bills', 'expenses', 'savings', 'debt'].includes(c.type)
@@ -90,7 +90,7 @@ export function AddTransactionModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add Transaction">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
         {/* Type toggle */}
         <div className="grid grid-cols-2 gap-2">
           {(['expense', 'income'] as const).map((t) => (
@@ -98,7 +98,7 @@ export function AddTransactionModal({
               key={t}
               type="button"
               onClick={() => setType(t)}
-              className={`py-2.5 rounded-xl border-2 border-ink text-sm font-black capitalize transition-all [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] ${
+              className={`py-2 sm:py-2.5 rounded-xl border-2 border-ink text-sm font-black capitalize transition-all [box-shadow:2px_2px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] ${
                 type === t
                   ? t === 'income'
                     ? 'bg-lime text-ink'
@@ -122,7 +122,7 @@ export function AddTransactionModal({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2">
           <div>
             <label className={labelCls}>Amount</label>
             <NumberInput
@@ -199,7 +199,7 @@ export function AddTransactionModal({
 
         <button
           type="submit"
-          className={`w-full py-3 rounded-xl border-2 border-ink font-display font-bold [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all ${
+          className={`w-full py-2.5 sm:py-3 rounded-xl border-2 border-ink font-display font-bold [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all ${
             type === 'income' ? 'bg-lime text-ink' : 'bg-yellow text-ink'
           }`}
         >

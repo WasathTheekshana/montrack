@@ -24,6 +24,7 @@ import { AddTransactionModal } from '@/components/modals/AddTransactionModal';
 import { AddBudgetItemModal } from '@/components/modals/AddBudgetItemModal';
 import { AddIncomeModal } from '@/components/modals/AddIncomeModal';
 import { cn } from '@/lib/utils';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import type { BudgetType } from '@/types';
 
 type Tab = 'overview' | 'budget' | 'transactions' | 'daily' | 'charts';
@@ -73,9 +74,7 @@ export default function MonthPage({ params }: { params: Promise<{ id: string }> 
   }, [month, transactions, stats.totalIncome]);
 
   // Before mount both server and client render the same shell — no hydration mismatch
-  if (!mounted) {
-    return <div className="min-h-screen bg-background" />;
-  }
+  if (!mounted) return <LoadingScreen />;
 
   if (!month) {
     return (
