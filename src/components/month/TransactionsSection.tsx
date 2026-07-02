@@ -21,7 +21,15 @@ export function TransactionsSection({
   onAdd,
   onDelete,
 }: TransactionsSectionProps) {
-  const catMap = new Map(categories.map((c) => [c.id, c.name]));
+  const catMap = new Map(categories.map((c) => [c.id, c]));
+
+  const typeChip: Record<string, { label: string; cls: string }> = {
+    bills:    { label: 'Bills',    cls: 'bg-yellow text-ink' },
+    expenses: { label: 'Expense',  cls: 'bg-pink text-white' },
+    savings:  { label: 'Savings',  cls: 'bg-lime text-ink' },
+    debt:     { label: 'Debt',     cls: 'bg-purple text-white' },
+    income:   { label: 'Income',   cls: 'bg-lime text-ink' },
+  };
   // Track which transaction rows are showing original currency
   const [showOriginal, setShowOriginal] = useState<Set<string>>(new Set());
 
@@ -86,11 +94,23 @@ export function TransactionsSection({
                 </span>
 
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-ink truncate">
-                    {tx.type === 'income'
-                      ? 'Income'
-                      : (catMap.get(tx.budgetCategoryId) ?? 'Uncategorised')}
-                  </p>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <p className="text-sm font-bold text-ink truncate">
+                      {tx.type === 'income'
+                        ? 'Income'
+                        : (catMap.get(tx.budgetCategoryId)?.name ?? 'Uncategorised')}
+                    </p>
+                    {(() => {
+                      const chip = tx.type === 'income'
+                        ? typeChip.income
+                        : typeChip[catMap.get(tx.budgetCategoryId)?.type ?? ''];
+                      return chip ? (
+                        <span className={`inline-flex items-center px-1.5 py-0 rounded-md border border-ink text-[9px] font-black uppercase tracking-wide flex-shrink-0 ${chip.cls}`}>
+                          {chip.label}
+                        </span>
+                      ) : null;
+                    })()}
+                  </div>
                   {tx.description && (
                     <p className="text-xs text-ink/50 truncate">{tx.description}</p>
                   )}
