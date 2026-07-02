@@ -8,7 +8,9 @@ import { useMonths } from '@/lib/hooks/useMonths';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { fmt } from '@/lib/currency';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
+import { AppTour } from '@/components/ui/AppTour';
 import { CreateMonthModal } from '@/components/modals/CreateMonthModal';
+import { useTour } from '@/lib/hooks/useTour';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { transactionRepository } from '@/lib/repositories/transactionRepository';
 import { budgetRepository } from '@/lib/repositories/budgetRepository';
@@ -204,6 +206,7 @@ export default function HomePage() {
   const [showCreate, setShowCreate] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
+  const { show: showTour, completeTour } = useTour();
 
   if (!mounted) return <LoadingScreen />;
 
@@ -371,6 +374,8 @@ export default function HomePage() {
         onCreate={createMonth}
         onCreated={(m) => router.push(`/months/${m.id}`)}
       />
+
+      {showTour && <AppTour onComplete={completeTour} />}
     </PageLayout>
   );
 }

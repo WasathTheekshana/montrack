@@ -34,6 +34,7 @@ export const KEYS = {
   months: 'months',
   settings: 'settings',
   notifications: 'notifications',
+  tourCompleted: 'tour_completed',
   income: (monthId: string) => `income:${monthId}`,
   budget: (monthId: string) => `budget:${monthId}`,
   transactions: (monthId: string) => `transactions:${monthId}`,

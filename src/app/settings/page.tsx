@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple, Bell, BellSlash } from '@phosphor-icons/react';
+import { ArrowLeft, Gear, Heart, DownloadSimple, UploadSimple, Bell, BellSlash, PlayCircle } from '@phosphor-icons/react';
 import { useSettings } from '@/lib/hooks/useSettings';
 import { useMonths } from '@/lib/hooks/useMonths';
 import { SUPPORTED_CURRENCIES } from '@/lib/currency';
@@ -11,6 +11,7 @@ import { Select } from '@/components/ui/Select';
 import { exportBackup, importBackup, clearAllData } from '@/lib/backup';
 import { useNotifications } from '@/lib/hooks/useNotifications';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
+import { storage, KEYS } from '@/lib/storage/adapter';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -397,6 +398,23 @@ export default function SettingsPage() {
           <p className="text-xs text-ink/40 font-bold mt-3 uppercase tracking-wider">
             v0.1.0 · View about page →
           </p>
+        </button>
+
+        {/* Replay tour */}
+        <button
+          onClick={() => {
+            storage.remove(KEYS.tourCompleted);
+            router.push('/');
+          }}
+          className="w-full flex items-center gap-3 rounded-2xl border-2 border-ink bg-surface [box-shadow:3px_3px_0_#0A0A0A] hover:[box-shadow:5px_5px_0_#0A0A0A] active:[box-shadow:0px_0px_0_#0A0A0A] active:translate-x-[3px] active:translate-y-[3px] transition-all p-5"
+        >
+          <div className="w-10 h-10 rounded-xl border-2 border-ink bg-lime flex items-center justify-center flex-shrink-0 [box-shadow:2px_2px_0_#0A0A0A]">
+            <PlayCircle size={20} weight="bold" className="text-ink" />
+          </div>
+          <div className="text-left">
+            <p className="font-display font-bold text-sm text-ink">Replay App Tour</p>
+            <p className="text-xs text-ink/50 font-semibold mt-0.5">Walk through the feature tour again</p>
+          </div>
         </button>
       </div>
     </PageLayout>
